@@ -1,416 +1,104 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Binary Funding Accounts</title>
-  <meta name="description" content="Binary Funding Accounts - Funded account challenges for binary trading." />
-
-  <style>
-    :root{
-      --bg-1: #0d0d0d;
-      --bg-2: #14320f; /* dark green for christmas gradient */
-      --accent: #e63946; /* christmas red */
-      --accent-2: #4ec3ff; /* blue accent kept for contrast */
-      --card-bg: #111;
-      --muted: #cbd5e1;
-      --success: #2ecc71;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
-      background: linear-gradient(180deg,var(--bg-1),var(--bg-2));
-      color:#fff;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      line-height:1.45;
-    }
-
-    /* Header */
-    header{
-      position:fixed;
-      top:0; left:0; right:0;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:14px 20px;
-      background:rgba(10,10,10,0.6);
-      backdrop-filter: blur(6px);
-      border-bottom:1px solid rgba(255,255,255,0.04);
-      z-index:60;
-    }
-    .logo{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      font-weight:700;
-      font-size:20px;
-      color:var(--accent-2);
-    }
-    .logo img{width:36px;height:36px}
-
-    nav{display:flex;gap:14px;align-items:center}
-    nav a{
-      color:#fff; text-decoration:none; font-weight:600; font-size:14px; opacity:0.95;
-      padding:6px 10px; border-radius:8px;
-    }
-    nav a:hover{background:rgba(255,255,255,0.03)}
-
-    .cta-btn{
-      background:var(--accent);
-      color:white;
-      padding:8px 14px;
-      border-radius:10px;
-      font-weight:700;
-      text-decoration:none;
-      border: none;
-      cursor:pointer;
-    }
-    .cta-btn:hover{filter:brightness(.95)}
-
-    /* Hero */
-    .hero{
-      padding:120px 20px 40px;
-      text-align:center;
-      max-width:1100px;
-      margin:0 auto;
-    }
-    .hero h1{
-      font-size:38px;
-      margin:0 0 8px;
-      letter-spacing:-0.6px;
-    }
-    .hero p{
-      margin:0 auto 18px;
-      max-width:820px;
-      color:var(--muted);
-    }
-
-    /* Plans */
-    #plans{
-      max-width:1100px;
-      margin:30px auto 0;
-      padding:30px 20px 60px;
-    }
-    .plans-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-      gap:18px;
-    }
-    .plan-card{
-      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.2));
-      border:1px solid rgba(255,255,255,0.04);
-      padding:22px;
-      border-radius:12px;
-      text-align:center;
-      transition:transform .18s ease, box-shadow .18s ease;
-    }
-    .plan-card:hover{ transform: translateY(-6px); box-shadow: 0 10px 30px rgba(0,0,0,0.6) }
-    .plan-title{ font-size:20px; margin-bottom:6px }
-    .plan-fee{ color:var(--success); font-weight:800; font-size:20px; margin-bottom:8px }
-    .plan-meta{ color:var(--muted); font-size:14px; margin-bottom:12px }
-    .plan-card button{
-      background:var(--accent);
-      color:#fff;
-      padding:10px 14px;
-      border-radius:10px;
-      font-weight:700;
-      border:none;
-      cursor:pointer;
-    }
-
-    /* Form / Checkout */
-    #form-section{
-      max-width:900px;
-      margin:30px auto 80px;
-      padding:22px;
-      display:none;
-      gap:18px;
-    }
-    .form-grid{display:grid; grid-template-columns:1fr 360px; gap:18px}
-    .card{
-      background: #0b1220;
-      padding:18px;
-      border-radius:12px;
-      border:1px solid rgba(255,255,255,0.03);
-    }
-    label{display:block; font-size:13px; color:var(--muted); margin-top:10px}
-    input, select{ width:100%; padding:10px; margin-top:6px; border-radius:8px; border:none; background:#071026; color:#fff }
-    .small{font-size:13px;color:var(--muted)}
-
-    .rules-box{ background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.15)); padding:12px; border-radius:8px; border:1px solid rgba(255,255,255,0.02); color:var(--muted) }
-
-    .pay-method{display:flex;flex-direction:column; gap:8px}
-    .addr{ background:#071826; padding:10px; border-radius:8px; font-family:monospace; display:flex; justify-content:space-between; align-items:center }
-    .copy-btn{ background:var(--accent-2); color:#001; border:none; padding:6px 8px; border-radius:6px; cursor:pointer; font-weight:700 }
-
-    .submit-btn{ margin-top:12px; background:var(--accent); color:white; border:none; padding:12px; border-radius:10px; width:100%; font-weight:800; cursor:pointer }
-
-    /* Broker selection cards */
-    .broker-grid{ display:flex; gap:10px; margin-top:10px; flex-wrap:wrap }
-    .broker{ padding:10px 12px; background:#071426; border-radius:8px; border:1px solid rgba(255,255,255,0.03); cursor:pointer }
-    .broker.selected{ outline:2px solid rgba(78,195,255,0.15); box-shadow:0 6px 18px rgba(78,195,255,0.06) }
-
-    /* Footer */
-    footer{ padding:30px 20px; text-align:center; color:var(--muted) }
-
-    /* India flag badge bottom-right */
-    .flag-badge{
-      position:fixed;
-      right:18px;
-      bottom:18px;
-      width:54px;
-      height:36px;
-      border-radius:6px;
-      overflow:hidden;
-      box-shadow:0 6px 22px rgba(0,0,0,0.6);
-      border:2px solid rgba(255,255,255,0.04);
-      z-index:70;
-      background:white;
-    }
-    .flag-badge img{ width:100%; height:100%; object-fit:cover; display:block }
-
-    /* Responsive */
-    @media (max-width:880px){
-      .form-grid{ grid-template-columns:1fr }
-      header{ padding:10px 12px }
-      .hero h1{ font-size:28px }
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Binary Funding Accounts</title>
+<link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+<header>
+<h1>Binary Funding Accounts</h1>
+</header>
+<section>
+<h2>Choose Your Plan</h2>
+<div class="plans">
+<button onclick="window.location.href='get-started.html'">$2,500 — $22</button>
+<button onclick="window.location.href='get-started.html'">$5,000 — $49</button>
+<button onclick="window.location.href='get-started.html'">$10,000 — $79</button>
+</div>
+</section>
+</body>
+</html>
 
-  <header>
-    <div class="logo">
-      <!-- Christmas tree icon + Title -->
-      <img src="https://upload.wikimedia.org/wikipedia/commons/3/3f/Christmas_tree_icon.png" alt="Xmas" />
-      Binary Funding Accounts
-    </div>
+<!-- get-started.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Get Started</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<h2>Select Binary Platform</h2>
+<select id="platform">
+<option>Quotex</option>
+<option>Binary</option>
+<option>Pocket Option</option>
+</select>
 
-    <nav>
-      <a href="#plans">Funding Plans</a>
-      <a href="#rules">Rules</a>
-      <a href="#faq">FAQ</a>
-      <a href="customer.html" class="cta-btn">Get Started</a>
-    </nav>
-  </header>
+<h2>Select Payment Method</h2>
+<select id="paymethod" onchange="showQR()">
+<option value="none">Choose Method</option>
+<option value="trc">USDT TRC20</option>
+<option value="bep">USDT BEP20</option>
+</select>
 
-  <main>
-    <section class="hero" id="home-hero">
-      <h1>Get Funded. Trade Binary. Earn Profits.</h1>
-      <p>Fast payouts • Low fees • Multiple account sizes • Supported brokers: Quotex, Binary, Pocket Option</p>
-    </section>
+<div id="qrbox" style="display:none; margin-top:20px;">
+<h3>Scan QR Code</h3>
+<img id="qrimg" width="200" />
+<p id="address"></p>
+</div>
 
-    <!-- PLANS -->
-    <section id="plans">
-      <h2 style="text-align:center; margin:6px 0 18px">Choose Your Account</h2>
+<h2>Customer Details</h2>
+<input type="email" placeholder="Email" />
+<input type="text" placeholder="Mobile Number" />
+<input type="text" placeholder="State" />
 
-      <div class="plans-grid" style="max-width:1100px; margin:0 auto;">
-        <div class="plan-card">
-          <div class="plan-title">$2,500 Account</div>
-          <div class="plan-fee">$22</div>
-          <div class="plan-meta">Perfect for beginners • Quick evaluation</div>
-          <div style="display:flex;justify-content:center"><button onclick="choosePlan('2500','$22')">Select</button></div>
-        </div>
+<h2>Upload Payment Screenshot</h2>
+<input type="file" />
+<br /><br />
+<button onclick="window.location.href='success.html'">Submit</button>
 
-        <div class="plan-card">
-          <div class="plan-title">$5,000 Account</div>
-          <div class="plan-fee">$49</div>
-          <div class="plan-meta">Recommended • Balanced risk</div>
-          <div style="display:flex;justify-content:center"><button onclick="choosePlan('5000','$49')">Select</button></div>
-        </div>
+<script>
+function showQR(){
+ let type=document.getElementById("paymethod").value;
+ let qr=document.getElementById("qrimg");
+ let box=document.getElementById("qrbox");
+ let addr=document.getElementById("address");
 
-        <div class="plan-card">
-          <div class="plan-title">$10,000 Account</div>
-          <div class="plan-fee">$79</div>
-          <div class="plan-meta">Pro traders • Higher capital</div>
-          <div style="display:flex;justify-content:center"><button onclick="choosePlan('10000','$79')">Select</button></div>
-        </div>
-      </div>
-    </section>
+ if(type=="trc"){
+ box.style.display='block';
+ qr.src="data:image/png;base64,iVBORw0...iVBORw0KGgoAAAANSUhEUgAAAXIAAAFyAQAAAADAX2ykAAACfElEQVR4nO2bTWrkMBCFvxoZemlDDjBHkW+Wq9lH6QMErGVA5s1C...";
+ addr.innerText="TDh3EGsnydQwbeXr8gaB1fAASh29P7cPWF";
+ }
+ else if(type=="bep"){
+ box.style.display='block';
+ qr.src="data:image/png;base64,iVBORw0...iVBORw0KGgoAAAANSUhEUgAAAXIAAAFyAQAAAADAX2ykAAACkUlEQVR4nO2aTW7bMBCFv6kEZEkBOYCPQl2tR8oNxKPkAAGkZQAK...";
+ addr.innerText="0xa42152E4E76174c7a0662424D958cA250FdEAB29";
+ }
+ else {
+ box.style.display='none';
+ }
+}
+</script>
+</body>
+</html>
 
-    <!-- FORM / Checkout -->
-    <section id="form-section">
-      <div style="max-width:1100px;margin:0 auto;padding:10px">
-        <div class="form-grid">
-          <!-- Left: Customer Form -->
-          <div class="card">
-            <h3 style="margin:0 0 6px">Customer Information</h3>
-            <div class="small">Fill your contact & payment details to complete purchase</div>
-
-            <label>Selected Plan</label>
-            <input id="selectedPlan" readonly />
-
-            <label>Plan Fee</label>
-            <input id="selectedFee" readonly />
-
-            <label>Email</label>
-            <input id="custEmail" type="email" placeholder="you@example.com" />
-
-            <label>Mobile Number</label>
-            <input id="custMobile" type="tel" placeholder="+91xxxxxxxxxx" />
-
-            <label>State</label>
-            <select id="custState">
-              <option value="">Select State</option>
-              <option>Maharashtra</option>
-              <option>Gujarat</option>
-              <option>Uttar Pradesh</option>
-              <option>Delhi</option>
-              <option>Others</option>
-            </select>
-
-            <label>Choose Binary Platform</label>
-            <div class="broker-grid" id="brokerGrid">
-              <div class="broker selected" data-name="Quotex" onclick="selectBroker(this)">Quotex</div>
-              <div class="broker" data-name="Binary" onclick="selectBroker(this)">Binary</div>
-              <div class="broker" data-name="Pocket Option" onclick="selectBroker(this)">Pocket Option</div>
-            </div>
-
-            <label style="margin-top:12px">Payment Method</label>
-            <div class="pay-method">
-              <label><input type="radio" name="payMethod" value="TRC20" checked> USDT TRC-20</label>
-              <label><input type="radio" name="payMethod" value="BEP20"> USDT BEP-20</label>
-            </div>
-
-            <div style="display:flex; gap:10px; margin-top:12px">
-              <button class="submit-btn" onclick="showPaymentInfo()">Proceed to Payment</button>
-            </div>
-          </div>
-
-          <!-- Right: Rules & Payment Info -->
-          <aside class="card">
-            <h4 style="margin-top:0">Funding Rules (applies to all plans)</h4>
-            <div class="rules-box" id="rules">
-              <strong>Max Daily Loss:</strong> 15% <br>
-              <strong>Profit Target:</strong> No Limit <br>
-              <strong>Minimum Trading Days:</strong> 6 <br>
-              <strong>Sunday:</strong> Analysis Market Only <br>
-              <strong>Trading Period:</strong> 30 Days <br>
-              <strong>News Trading:</strong> Allowed
-            </div>
-
-            <h4 style="margin-top:18px">Payment Addresses</h4>
-            <div class="pay-box">
-              <div style="margin-bottom:8px">Select method to see address & copy:</div>
-
-              <div class="addr" id="trcAddr">
-                <div style="flex:1">TDh3EGsnydQwbeXr8gaB1fAASh29P7cPWF</div>
-                <button class="copy-btn" onclick="copyToClipboard('TDh3EGsnydQwbeXr8gaB1fAASh29P7cPWF')">Copy</button>
-              </div>
-
-              <div class="addr" id="bepAddr" style="margin-top:8px;">
-                <div style="flex:1">0xa42152E4E76174c7a0662424D958cA250FdEAB29</div>
-                <button class="copy-btn" onclick="copyToClipboard('0xa42152E4E76174c7a0662424D958cA250FdEAB29')">Copy</button>
-              </div>
-
-              <div style="margin-top:12px" class="small">After payment, please send the payment screenshot to our Telegram support for verification.</div>
-            </div>
-
-            <h4 style="margin-top:16px">Support</h4>
-            <div class="pay-box" style="display:flex;flex-direction:column; gap:8px;">
-              <div>Telegram: <a href="https://t.me/Qtxfundedproac" target="_blank" style="color:var(--accent-2); text-decoration:none">@Qtxfundedproac</a></div>
-              <div class="small">Click the link to open Telegram and message us with your payment screenshot and order details.</div>
-            </div>
-
-          </aside>
-        </div>
-      </div>
-    </section>
-
-    <!-- Simple FAQ (anchor) -->
-    <section id="faq" style="max-width:900px;margin:12px auto 80px;padding:0 20px">
-      <h3>FAQ</h3>
-      <div style="margin-top:12px;color:var(--muted)">
-        <strong>Q:</strong> How long until my funded account is active?<br>
-        <strong>A:</strong> After we verify payment (usually within 24 hours), we'll create and send account details.<br><br>
-
-        <strong>Q:</strong> Do you support other payment methods?<br>
-        <strong>A:</strong> Currently we accept USDT TRC-20 & BEP-20. Contact support for alternatives.<br><br>
-
-        <strong>Q:</strong> What if I have issues?<br>
-        <strong>A:</strong> Message our Telegram support @Qtxfundedproac.
-      </div>
-    </section>
-
-  </main>
-
-  <!-- India flag badge -->
-  <div class="flag-badge" title="India">
-    <img src="https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg" alt="India" />
-  </div>
-
-  <footer>
-    © <span id="year"></span> Binary Funding Accounts • All rights reserved.
-  </footer>
-
-  <script>
-    // Init
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Hide addresses depending on radio selection
-    function updateAddrVisibility() {
-      const method = document.querySelector('input[name="payMethod"]:checked').value;
-      document.getElementById('trcAddr').style.display = method === 'TRC20' ? 'flex' : 'none';
-      document.getElementById('bepAddr').style.display = method === 'BEP20' ? 'flex' : 'none';
-    }
-    document.querySelectorAll('input[name="payMethod"]').forEach(r => r.addEventListener('change', updateAddrVisibility));
-    updateAddrVisibility();
-
-    // Plan selection
-    function choosePlan(plan, fee) {
-      // Show form
-      document.getElementById('form-section').style.display = 'block';
-      document.getElementById('selectedPlan').value = plan;
-      document.getElementById('selectedFee').value = fee;
-      // Scroll to form
-      location.hash = '#form-section';
-      // set default broker selection
-      selectBroker(document.querySelector('.broker'));
-    }
-
-    // Broker selection
-    function selectBroker(el) {
-      document.querySelectorAll('.broker').forEach(b => b.classList.remove('selected'));
-      el.classList.add('selected');
-      // store chosen broker on the element
-      document.getElementById('chosenBroker')?.remove(); // cleanup old hidden
-      const ip = document.createElement('input');
-      ip.type = 'hidden'; ip.id = 'chosenBroker'; ip.value = el.dataset.name || el.textContent;
-      document.getElementById('form-section').appendChild(ip);
-    }
-
-    // Show payment info (scroll to right)
-    function showPaymentInfo(){
-      const fee = document.getElementById('selectedFee').value || '';
-      if(!document.getElementById('custEmail').value || !document.getElementById('custMobile').value){
-        alert('Please enter Email and Mobile number before proceeding to payment.');
-        return;
-      }
-      // bring attention to payment right column (no external payment processor integrated here)
-      window.scrollTo({top: document.getElementById('form-section').offsetTop - 20, behavior:'smooth'});
-      alert('Please pay using the selected USDT method and then message @Qtxfundedproac on Telegram with your payment screenshot and details.'); 
-    }
-
-    // Copy helper
-    function copyToClipboard(text){
-      navigator.clipboard && navigator.clipboard.writeText(text).then(()=>{
-        alert('Address copied to clipboard.');
-      }).catch(()=>{
-        // fallback
-        const ta = document.createElement('textarea');
-        ta.value = text; document.body.appendChild(ta); ta.select();
-        try { document.execCommand('copy'); alert('Address copied to clipboard.'); } catch(e){ alert('Copy failed — please select and copy manually.'); }
-        ta.remove();
-      });
-    }
-
-    // Make broker selection default
-    window.addEventListener('DOMContentLoaded', () => {
-      const first = document.querySelector('.broker');
-      if(first) selectBroker(first);
-    });
-  </script>
+<!-- success.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Success</title>
+</head>
+<body>
+<h1>Payment Successfully Submitted!</h1>
+<p>Your funded account details will be sent to your registered email shortly.</p>
+<p>Please wait while our team verifies your transaction.</p>
+<p>For support, contact us on Telegram: @Qtxfundedproac</p>
 </body>
 </html>
