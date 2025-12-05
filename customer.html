@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Choose Plan - Binary Funding Accounts</title>
+<style>
+  body{font-family:Arial,system-ui;background:linear-gradient(180deg,#0d0d0d,#14320f);color:#fff;margin:0;padding:0}
+  .container{max-width:760px;margin:28px auto;padding:18px}
+  h1{color:#dfffdc}
+  .card{background:#08101a;padding:16px;border-radius:10px;border:1px solid rgba(255,255,255,0.03); margin-bottom:14px}
+  label{display:block;font-size:13px;color:#cfe8d0;margin-top:8px}
+  input,select{width:100%;padding:10px;border-radius:8px;border:none;background:#071826;color:#fff;margin-top:6px}
+  .row{display:flex;gap:10px}
+  .plan-btn{background:#e63946;color:#fff;padding:10px 14px;border-radius:8px;border:none;cursor:pointer;margin-top:10px;font-weight:700}
+  .broker{display:inline-block;padding:8px 12px;margin:6px;border-radius:8px;background:#071426;cursor:pointer;border:1px solid rgba(255,255,255,0.02)}
+  .broker.selected{outline:2px solid rgba(78,195,255,0.12);box-shadow:0 8px 20px rgba(0,0,0,0.6)}
+  .note{font-size:13px;color:#cfe8d0;margin-top:8px}
+  .top-link{position:fixed;right:18px;top:18px;}
+  a.top-btn{background:#00a8ff;padding:8px 12px;border-radius:8px;color:#001;font-weight:800;text-decoration:none}
+</style>
+</head>
+<body>
+  <a class="top-btn top-link" href="index.html">Back Home</a>
+  <div class="container">
+    <h1>Choose Your Plan & Provide Details</h1>
+
+    <div class="card">
+      <strong>1) Select Account</strong>
+      <div style="margin-top:10px">
+        <label><input type="radio" name="plan" value="2500" checked> $2,500 — Fee $22</label>
+        <label><input type="radio" name="plan" value="5000"> $5,000 — Fee $49</label>
+        <label><input type="radio" name="plan" value="10000"> $10,000 — Fee $79</label>
+      </div>
+    </div>
+
+    <div class="card">
+      <strong>2) Choose Binary Platform</strong>
+      <div id="brokers" style="margin-top:10px">
+        <span class="broker selected" data-name="Quotex">Quotex</span>
+        <span class="broker" data-name="Binary">Binary</span>
+        <span class="broker" data-name="Pocket Option">Pocket Option</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <strong>3) Customer Information</strong>
+      <label>Email</label>
+      <input id="email" type="email" placeholder="you@example.com" />
+      <label>Mobile Number</label>
+      <input id="mobile" type="tel" placeholder="+91xxxxxxxxxx" />
+      <label>State</label>
+      <select id="state">
+        <option value="">Select state</option>
+        <option>Maharashtra</option><option>Gujarat</option><option>Uttar Pradesh</option><option>Delhi</option><option>Others</option>
+      </select>
+      <div class="note">Rules apply to all plans: Max Daily Loss 15% • Profit Target: No Limit • Minimum Trading Days: 6 • Sunday: Analysis only • Trading Period: 30 days • News Trading: Allowed</div>
+    </div>
+
+    <div style="text-align:center;margin-top:10px">
+      <button class="plan-btn" onclick="proceedToPayment()">Proceed to Payment</button>
+    </div>
+
+    <div style="margin-top:16px;color:#cfe8d0;font-size:13px">
+      <strong>Support:</strong> Message on Telegram: <a href="https://t.me/Qtxfundedproac" target="_blank" style="color:#00a8ff;text-decoration:none">@Qtxfundedproac</a>
+    </div>
+  </div>
+
+<script>
+  // broker selection
+  document.querySelectorAll('.broker').forEach(b=>{
+    b.addEventListener('click', ()=> {
+      document.querySelectorAll('.broker').forEach(x=>x.classList.remove('selected'));
+      b.classList.add('selected');
+    })
+  });
+
+  function getSelectedPlan(){
+    const plan = document.querySelector('input[name="plan"]:checked').value;
+    let fee = '$22';
+    if(plan==='5000') fee='$49'; if(plan==='10000') fee='$79';
+    return {plan, fee};
+  }
+
+  function proceedToPayment(){
+    const email = document.getElementById('email').value.trim();
+    const mobile = document.getElementById('mobile').value.trim();
+    const state = document.getElementById('state').value;
+    if(!email || !mobile || !state){ alert('कृपया Email, Mobile आणि State भरावं.'); return; }
+
+    const broker = document.querySelector('.broker.selected').dataset.name || 'Quotex';
+    const {plan, fee} = getSelectedPlan();
+
+    // send user to payment page with query params (URL-encoding)
+    const params = new URLSearchParams({plan, fee, broker, email, mobile, state});
+    window.location.href = 'payment.html?' + params.toString();
+  }
+</script>
+</body>
+</html>
