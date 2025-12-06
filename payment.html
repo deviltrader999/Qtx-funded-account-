@@ -3,7 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Payment - Binary Funding Accounts</title>
+<title>Payment - QTX Funded Account</title>
+
 <style>
   body{font-family:Arial,system-ui;background:linear-gradient(180deg,#0d0d0d,#14320f);color:#fff;margin:0;padding:0}
   .wrap{max-width:820px;margin:28px auto;padding:18px}
@@ -22,47 +23,48 @@
   .top-link{position:fixed;right:18px;top:18px;}
   a.top-btn{background:#00a8ff;padding:8px 12px;border-radius:8px;color:#001;font-weight:800;text-decoration:none}
 </style>
+
 </head>
 <body>
-  <a class="top-btn top-link" href="customer.html">Back to Details</a>
 
-  <div class="wrap">
-    <h1>Payment Processing</h1>
+<a class="top-btn top-link" href="customer.html">Back to Details</a>
 
-    <div class="card" id="summaryCard">
-      <!-- filled by JS -->
-    </div>
+<div class="wrap">
 
-    <div class="card">
-      <strong>Select Network</strong>
-      <div style="margin-top:8px">
-        <label><input type="radio" name="network" value="TRC20" checked> USDT TRC-20</label>
-        <label><input type="radio" name="network" value="BEP20"> USDT BEP-20</label>
-      </div>
+<h1>Payment Processing</h1>
 
-      <div id="addresses" style="margin-top:12px">
-        <!-- addresses + QR will be injected here -->
-      </div>
+<div class="card" id="summaryCard"></div>
 
-      <div style="margin-top:12px">
-        <label>Upload Payment Screenshot (required)</label>
-        <input type="file" id="screenshot" accept="image/*" />
-        <div id="preview" style="margin-top:10px"></div>
-        <div class="note">After payment, upload screenshot & click Submit. Also message @Qtxfundedproac on Telegram with your screenshot and details for faster verification.</div>
-        <button class="submit-btn" onclick="submitProof()">Submit Screenshot & Confirm Payment</button>
-      </div>
-    </div>
-
-    <div id="result" style="display:none"></div>
+<div class="card">
+  <strong>Select Network</strong>
+  <div style="margin-top:8px">
+    <label><input type="radio" name="network" value="TRC20" checked> USDT TRC-20</label>
+    <label><input type="radio" name="network" value="BEP20"> USDT BEP-20</label>
   </div>
 
+  <div id="addresses" style="margin-top:12px"></div>
+
+  <div style="margin-top:12px">
+    <label>Upload Payment Screenshot (required)</label>
+    <input type="file" id="screenshot" accept="image/*" />
+    <div id="preview" style="margin-top:10px"></div>
+    <div class="note">After payment upload screenshot & click Submit. Also message @Qtxfundedproac on Telegram.</div>
+
+    <button class="submit-btn" onclick="submitProof()">Submit Screenshot & Confirm Payment</button>
+  </div>
+</div>
+
+<div id="result" style="display:none"></div>
+
+</div>
+
 <script>
-  // payment addresses (from user)
+  // payment addresses
   const TRC_ADDR = "TDh3EGsnydQwbeXr8gaB1fAASh29P7cPWF";
   const BEP_ADDR = "0xa42152E4E76174c7a0662424D958cA250FdEAB29";
   const TG_LINK = "https://t.me/Qtxfundedproac";
 
-  // read query params from customer page
+  // query params
   const params = new URLSearchParams(location.search);
   const plan = params.get('plan') || 'N/A';
   const fee = params.get('fee') || 'N/A';
@@ -71,122 +73,5 @@
   const mobile = params.get('mobile') || '';
   const state = params.get('state') || '';
 
-  // render summary
-  const summaryCard = document.getElementById('summaryCard');
-  summaryCard.innerHTML = 
-    <div><strong>Selected Plan:</strong> ${plan} ($${fee.replace('$','')})</div>
-    <div style="margin-top:6px"><strong>Broker:</strong> ${broker}</div>
-    <div style="margin-top:6px"><strong>Customer Email:</strong> ${email}</div>
-    <div style="margin-top:6px"><strong>Mobile:</strong> ${mobile}</div>
-    <div style="margin-top:6px"><strong>State:</strong> ${state}</div>
-  ;
-
-  // helper to show address + qr
-  function renderAddresses(network){
-    const container = document.getElementById('addresses');
-container.innerHTML = '';
-    if(network === 'TRC20'){
-      container.innerHTML = 
-        <div class="addr"><code>${TRC_ADDR}</code> <button class="copy-btn" onclick="copy('${TRC_ADDR}')">Copy</button></div>
-        <div class="qr"><img src="https://chart.googleapis.com/chart?chs=260x260&cht=qr&chl=${encodeURIComponent(TRC_ADDR)}" width="200" style="border-radius:8px"></div>
-      ;
-    } else {
-      container.innerHTML = 
-        <div class="addr"><code>${BEP_ADDR}</code> <button class="copy-btn" onclick="copy('${BEP_ADDR}')">Copy</button></div>
-        <div class="qr"><img src="https://chart.googleapis.com/chart?chs=260x260&cht=qr&chl=${encodeURIComponent(BEP_ADDR)}" width="200" style="border-radius:8px"></div>
-      ;
-    }
-  }
-
-  // init
-  const radios = document.querySelectorAll('input[name="network"]');
-  radios.forEach(r=> r.addEventListener('change', ()=> renderAddresses(document.querySelector('input[name="network"]:checked').value)));
-  renderAddresses('TRC20');
-
-  // copy helper
-  function copy(text){
-    navigator.clipboard && navigator.clipboard.writeText(text).then(()=> alert('Address copied to clipboard.'));
-  }
-
-  // preview selected screenshot
-  document.getElementById('screenshot').addEventListener('change', function(e){
-    const file = this.files[0];
-    const prev = document.getElementById('preview');
-    prev.innerHTML = '';
-    if(!file) return;
-    const img = document.createElement('img');
-    img.style.maxWidth = '260px';
-    img.style.borderRadius = '8px';
-    img.style.boxShadow = '0 10px 30px rgba(0,0,0,0.6)';
-    img.src = URL.createObjectURL(file);
-    prev.appendChild(img);
-  });
-
-  // submit handler (static)
-  function submitProof(){
-    const fileEl = document.getElementById('screenshot');
-    if(!fileEl.files.length){ alert('कृपया पेमेंटची स्क्रीनशॉट अपलोड करा.'); return; }
-
-    // collect data (we won't upload to server — just simulate)
-    const network = document.querySelector('input[name="network"]:checked').value;
-    const chosenAddr = network === 'TRC20' ? TRC_ADDR : BEP_ADDR;
-
-    // Simulate submission: show confirmation message and instructions
-    document.getElementById('result').style.display = 'block';
-    document.getElementById('result').innerHTML = 
-      <div class="confirm">
-  <h3>Payment Submitted Successfully</h3>
-
-  <p class="small">
-    Thank you! Your payment screenshot has been successfully submitted.  
-    Our verification team has received your details and will now review your transaction.
-  </p>
-
-  <p class="small" style="margin-top:8px">
-    Once your payment is confirmed, your funded account will be activated and all login details will be sent to your registered email address.
-  </p>
-
-  <p class="small" style="margin-top:8px">
-    For faster verification, you can also send your payment screenshot and your details directly to our support team on Telegram.
-  </p>
-
-  <p class="small" style="margin-top:10px">
-    <a href="https://t.me/Qtxfundedproac" target="_blank" 
-       style="color:#001;background:#00a8ff;padding:6px 10px;border-radius:8px;text-decoration:none">
-       Contact Support on Telegram
-    </a>
-  </p>
-
-  <p class="small" style="margin-top:12px">
-    Please keep your Reference ID safe. Our team may ask for it during verification.
-  </p>
-</div>
-    
-
-    // Optional: create fake "ticket id" for user
-    const ticket = 'TX-'+Math.random().toString(36).substring(2,9).toUpperCase();
-    const note = document.createElement('div');
-    note.className = 'card';
-    note.style.marginTop='12px';
-    note.innerHTML = <strong>Reference ID:</strong> ${ticket} <div class="small" style="margin-top:6px">Use this ID when contacting support.</div>;
-    document.getElementById('result').appendChild(note);
-
-    // Clear file input (simulate processed)
-    fileEl.value = '';
-    document.getElementById('preview').innerHTML = '';
-
-    // Show browser notification if allowed (optional)
-    if("Notification" in window){
-      if(Notification.permission === "granted"){
-        new Notification("Payment submitted", {body: "Your payment screenshot was submitted. We will email you account details soon."});} else if(Notification.permission !== "denied"){
-        Notification.requestPermission().then(p=>{
-          if(p === "granted"){
-            new Notification("Payment submitted", {body: "Your payment screenshot was submitted. We will email you account details soon."});
-          }
-        });
-      }
-    }
-  }
-</script>
-</body>
-</html>
+  // summary
+  const summaryCard = document.getEle
