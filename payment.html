@@ -84,7 +84,6 @@
   // helper to show address + qr
   function renderAddresses(network){
     const container = document.getElementById('addresses');
-
 container.innerHTML = '';
     if(network === 'TRC20'){
       container.innerHTML = 
@@ -179,9 +178,7 @@ container.innerHTML = '';
     // Show browser notification if allowed (optional)
     if("Notification" in window){
       if(Notification.permission === "granted"){
-        new Notification("Payment submitted", {body: "Your payment screenshot was submitted. We will email you account details soon."});
-
-} else if(Notification.permission !== "denied"){
+        new Notification("Payment submitted", {body: "Your payment screenshot was submitted. We will email you account details soon."});} else if(Notification.permission !== "denied"){
         Notification.requestPermission().then(p=>{
           if(p === "granted"){
             new Notification("Payment submitted", {body: "Your payment screenshot was submitted. We will email you account details soon."});
