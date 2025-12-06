@@ -140,7 +140,6 @@
         <p class="small" style="margin-top:10px">तुम्हाला तत्काळ मदत हवी असल्यास <a href="${TG_LINK}" target="_blank" style="color:#001;background:#00a8ff;padding:6px 10px;border-radius:8px;text-decoration:none">Contact Telegram</a></p>
       </div>
     ;
-
     // Optional: create fake "ticket id" for user
     const ticket = 'TX-'+Math.random().toString(36).substring(2,9).toUpperCase();
     const note = document.createElement('div');
@@ -148,11 +147,9 @@
     note.style.marginTop='12px';
     note.innerHTML = <strong>Reference ID:</strong> ${ticket} <div class="small" style="margin-top:6px">Use this ID when contacting support.</div>;
     document.getElementById('result').appendChild(note);
-
     // Clear file input (simulate processed)
     fileEl.value = '';
     document.getElementById('preview').innerHTML = '';
-
     // Show browser notification if allowed (optional)
     if("Notification" in window){
       if(Notification.permission === "granted"){
