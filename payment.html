@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Payment - Binary Funding Accounts</title>
-<style>
+<css>
   body{font-family:Arial,system-ui;background:linear-gradient(180deg,#0d0d0d,#14320f);color:#fff;margin:0;padding:0}
   .wrap{max-width:820px;margin:28px auto;padding:18px}
   .card{background:#08101a;padding:16px;border-radius:10px;border:1px solid rgba(255,255,255,0.03); margin-bottom:14px}
@@ -21,7 +21,7 @@
   .small{font-size:13px;color:#cfe8d0}
   .top-link{position:fixed;right:18px;top:18px;}
   a.top-btn{background:#00a8ff;padding:8px 12px;border-radius:8px;color:#001;font-weight:800;text-decoration:none}
-</style>
+</css>
 </head>
 <body>
   <a class="top-btn top-link" href="customer.html">Back to Details</a>
@@ -125,7 +125,7 @@
   // submit handler (static)
   function submitProof(){
     const fileEl = document.getElementById('screenshot');
-    if(!fileEl.files.length){ alert('कृपया पेमेंटची स्क्रीनशॉट अपलोड करा.'); return; }
+    if(!fileEl.files.length){ alert("Payment Successful! Your transaction has been completed."); }
 
     // collect data (we won't upload to server — just simulate)
     const network = document.querySelector('input[name="network"]:checked').value;
@@ -135,11 +135,45 @@
     document.getElementById('result').style.display = 'block';
     document.getElementById('result').innerHTML = `
       <div class="confirm">
-        <h3>Payment Submitted</h3>
-        <p class="small">आपल्या पेमेंटची स्क्रीनशॉट आम्हाला मिळाली आहे. आमचा सपोर्ट टीम तसेच तुमच्या Telegram वरून (कृपया @Qtxfundedproac वर संदेश पाठवा) आणि ईमेल (${email}) वर लवकरच खात्रीकरण व अकाउंट तपशील पाठवेल.</p>
-        <p class="small" style="margin-top:8px">आपला funded account तयार झाल्यानंतर त्याची संपूर्ण माहिती **${email}** या ईमेलवर पाठवली जाईल. कृपया ईमेल तपासा.</p>
-        <p class="small" style="margin-top:10px">तुम्हाला तत्काळ मदत हवी असल्यास <a href="${TG_LINK}" target="_blank" style="color:#001;background:#00a8ff;padding:6px 10px;border-radius:8px;text-decoration:none">Contact Telegram</a></p>
-      </div>
+  <h3>Payment Submitted Successfully</h3>
+
+  <p class="small">
+    Thank you! Your payment screenshot has been successfully submitted.  
+    Our verification team has received your details and will now review your transaction.
+  </p>
+
+  <p class="small" style="margin-top:8px">
+    Once your payment is confirmed, your funded account will be activated and all login details will be sent to your registered email address.
+  </p>
+
+  <p class="small" style="margin-top:8px">
+    For faster verification, you can also send your payment screenshot and your details directly to our support team on Telegram.
+  </p>
+
+  <p class="small" style="margin-top:10px">
+    <a href="https://t.me/Qtxfundedproac" target="_blank" 
+       style="color:#001;background:#00a8ff;padding:6px 10px;border-radius:8px;text-decoration:none">
+       Contact Support on Telegram
+    </a>
+  </p>
+
+  <p class="small" style="margin-top:12px">
+    Please keep your Reference ID safe. Our team may ask for it during verification.
+  </p>
+
+  </p>
+
+  <p class="small" style="margin-top:10px">
+    <a href="https://t.me/Qtxfundedproac" target="_blank" 
+       style="color:#001;background:#00a8ff;padding:6px 10px;border-radius:8px;text-decoration:none">
+       Contact Support on Telegram
+    </a>
+  </p>
+
+  <p class="small" style="margin-top:12px">
+    Please keep your Reference ID safe. Our team may ask for it during verification.
+  </p>
+</div>
     `;
 
     // Optional: create fake "ticket id" for user
