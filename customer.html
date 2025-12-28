@@ -72,7 +72,6 @@
     b.addEventListener('click', ()=> {
       document.querySelectorAll('.broker').forEach(x=>x.classList.remove('selected'));
       b.classList.add('selected');
-    })
   });
   function getSelectedPlan(){
     const plan = document.querySelector('input[name="plan"]:checked').value;
@@ -102,7 +101,6 @@
   });
 
   window.location.href = 'payment.html?' + params.toString();
-}
   }
 </script>
 </body>
