@@ -5,19 +5,102 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Choose Plan - Binary Funding Accounts</title>
 <style>
-  body{font-family:Arial,system-ui;background:linear-gradient(180deg,#0d0d0d,#14320f);color:#fff;margin:0;padding:0}
-  .container{max-width:760px;margin:28px auto;padding:18px}
-  h1{color:#dfffdc}
-  .card{background:#08101a;padding:16px;border-radius:10px;border:1px solid rgba(255,255,255,0.03); margin-bottom:14px}
-  label{display:block;font-size:13px;color:#cfe8d0;margin-top:8px}
-  input,select{width:100%;padding:10px;border-radius:8px;border:none;background:#071826;color:#fff;margin-top:6px}
-  .row{display:flex;gap:10px}
-  .plan-btn{background:#e63946;color:#fff;padding:10px 14px;border-radius:8px;border:none;cursor:pointer;margin-top:10px;font-weight:700}
-  .broker{display:inline-block;padding:8px 12px;margin:6px;border-radius:8px;background:#071426;cursor:pointer;border:1px solid rgba(255,255,255,0.02)}
-  .broker.selected{outline:2px solid rgba(78,195,255,0.12);box-shadow:0 8px 20px rgba(0,0,0,0.6)}
-  .note{font-size:13px;color:#cfe8d0;margin-top:8px}
-  .top-link{position:fixed;right:18px;top:18px;}
-  a.top-btn{background:#00a8ff;padding:8px 12px;border-radius:8px;color:#001;font-weight:800;text-decoration:none}
+  body {
+    margin: 0;
+    padding: 0;
+    background: radial-gradient(circle at top, #020617, #000000);
+    color: #e5e7eb;
+    font-family: 'Poppins', 'Segoe UI', system-ui, sans-serif;
+}
+
+/* ===== MAIN CARD / FORM ===== */
+.container, .card, .form-box {
+    background: linear-gradient(180deg, #020617, #020617);
+    border: 1px solid rgba(59,130,246,0.25);
+    border-radius: 18px;
+    box-shadow:
+        0 25px 60px rgba(0,0,0,0.8),
+        inset 0 0 0 1px rgba(255,255,255,0.03);
+}
+
+/* ===== HEADINGS ===== */
+h1, h2, h3 {
+    color: #ffffff;
+    font-weight: 600;
+    letter-spacing: 0.6px;
+}
+
+/* ===== LABELS ===== */
+label {
+    color: #9ca3af;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* ===== INPUTS ===== */
+input, select, textarea {
+    width: 100%;
+    background: #020617;
+    color: #ffffff;
+    border: 1px solid #1e293b;
+    border-radius: 12px;
+    padding: 12px;
+    transition: 0.25s;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #22c55e;
+    box-shadow: 0 0 0 2px rgba(34,197,94,0.35);
+}
+
+/* ===== BUTTON ===== */
+button, .btn {
+    width: 100%;
+    background: linear-gradient(135deg, #2563eb, #22c55e);
+    color: #ffffff;
+    border: none;
+    border-radius: 14px;
+    padding: 14px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+button:hover, .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 40px rgba(34,197,94,0.45);
+}
+
+/* ===== HIGHLIGHT TEXT ===== */
+.price, .amount, .highlight {
+    color: #22c55e;
+    font-weight: 700;
+}
+
+/* ===== LINKS ===== */
+a {
+    color: #60a5fa;
+}
+a:hover {
+    color: #22c55e;
+}
+
+/* ===== TELEGRAM / INFO TEXT ===== */
+small, .note {
+    color: #94a3b8;
+    font-size: 13px;
+}
+
+/* ===== PREMIUM GLOW ===== */
+.container:hover, .card:hover {
+    box-shadow:
+        0 30px 70px rgba(0,0,0,0.9),
+        0 0 40px rgba(34,197,94,0.12);
+}
+</style>
 </style>
 </head>
 <body>
