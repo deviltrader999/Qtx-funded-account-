@@ -80,15 +80,29 @@
     if(plan==='5000') fee='$49'; if(plan==='10000') fee='$79';
     return {plan, fee};
   }function proceedToPayment(){
-    const email = document.getElementById('email').value.trim();
-    const mobile = document.getElementById('mobile').value.trim();
-    const state = document.getElementById('state').value;
-    if(!email  !mobile  !state){ alert('कृपया Email, Mobile आणि State भरावं.'); return; }
-    const broker = document.querySelector('.broker.selected').dataset.name || 'Quotex';
-    const {plan, fee} = getSelectedPlan();
- // send user to payment page with query params (URL-encoding)
-    const params = new URLSearchParams({plan, fee, broker, email, mobile, state});
-    window.location.href = 'payment.html?' + params.toString();
+  const email = document.getElementById('email').value.trim();
+  const mobile = document.getElementById('mobile').value.trim();
+  const state = document.getElementById('state').value;
+
+  if(!email  !mobile  !state){
+    alert('कृपया Email, Mobile आणि State भरावं.');
+    return;
+  }
+
+  const brokerEl = document.querySelector('.broker.selected');
+  const broker = brokerEl ? brokerEl.dataset.name : 'Quotex';
+
+  const plan = document.querySelector('input[name="plan"]:checked').value;
+  let fee = '$22';
+  if(plan === '5000') fee = '$49';
+  if(plan === '10000') fee = '$79';
+
+  const params = new URLSearchParams({
+    plan, fee, broker, email, mobile, state
+  });
+
+  window.location.href = 'payment.html?' + params.toString();
+}
   }
 </script>
 </body>
