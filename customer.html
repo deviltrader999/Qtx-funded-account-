@@ -107,7 +107,7 @@ button:hover{
   <div class="card plan">
     <h2>1) Select Account</h2>
     <label><input type="radio" name="plan" value="2500" checked> $2,500 – Fee $22</label>
-    <label><input type="radio" name="plan" value="5000"> $5,000 – Fee $15</label>
+    <label><input type="radio" name="plan" value="5000"> $5,000 – Fee $40</label>
     <label><input type="radio" name="plan" value="10000"> $10,000 – Fee $79</label>
   </div>
 
@@ -169,7 +169,7 @@ function proceedToPayment(){
   const plan = document.querySelector('input[name="plan"]:checked').value;
 
   let fee = '22';
-  if(plan === '5000') fee = '15';
+  if(plan === '5000') fee = '40';
   if(plan === '10000') fee = '79';
 
   window.location.href =
